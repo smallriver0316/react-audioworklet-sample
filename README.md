@@ -1,4 +1,4 @@
-# react-audioworklet-sample
+# react-audioworklet-study
 
 Sample codes to implement AudioWorklet programs in React
 
