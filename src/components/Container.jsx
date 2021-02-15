@@ -4,6 +4,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import BasicPattern from './BasicPattern';
 import TextDefinePattern from './TextDefinePattern';
+import ParamDefinePattern from './ParamDefinePattern';
 
 const useStyles = makeStyles({
   container: {
@@ -23,6 +24,7 @@ const AppContainer = () => {
         <div className={classes.container}>
           <BasicPattern />
           <TextDefinePattern />
+          <ParamDefinePattern />
         </div>
       </Container>
     </React.Fragment>

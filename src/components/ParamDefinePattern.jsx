@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { makeStyles, Card, CardActions, CardContent, Button, Typography } from "@material-ui/core";
+import { makeStyles, Card, CardActions, CardContent, Button, Typography } from '@material-ui/core';
+import processor from '!!raw-loader!../audioworklet/noise-generator.js';
 
 const useStyles = makeStyles({
   root: {
@@ -11,49 +12,12 @@ const useStyles = makeStyles({
   }
 });
 
-const processor = `
-class GainProcessor extends AudioWorkletProcessor {
-  constructor() {
-    super();
-  }
-
-  static get parameterDescriptors() {
-    return [{
-      name: 'gain',
-      defaultValue: '1'
-    }];
-  }
-
-  process(inputs, outputs, parameters) {
-    const input = inputs[0];
-    const output = outputs[0];
-    const gain = parameters.gain;
-
-    for (let ch = 0; ch < input.length; ch++) {
-      const inputChannel = input[ch];
-      const outputChannel = output[ch];
-      if (gain.length === 1) {
-        for (let i = 0; i < inputChannel.length; ++i) {
-          outputChannel[i] = inputChannel[i] * gain[0];
-        }
-      } else {
-        for (let i = 0; i < inputChannel.length; ++i) {
-          outputChannel[i] = inputChannel[i] * gain[i];
-        }
-      }
-    }
-    return true;
-  }
-}
-
-registerProcessor('gain-processor', GainProcessor);
-`;
-
-const TextDefinePattern = () => {
+const ParamDefinePattern = () => {
   const classes = useStyles();
   const [context, setContext] = useState(null);
   const [processing, setProcessing] = useState(false);
   const [oscillator, setOscillator] = useState(null);
+  const [, setGain] = useState(null);
 
   const startProcessing = () => {
     setProcessing(true);
@@ -63,15 +27,23 @@ const TextDefinePattern = () => {
     const blobURL = URL.createObjectURL(blob);
     context.audioWorklet.addModule(blobURL).then(() => {
       const oscillatorNode = new OscillatorNode(context);
-      const gainWorkletNode = new AudioWorkletNode(context, 'gain-processor');
-      oscillatorNode.connect(gainWorkletNode).connect(context.destination);
+      const gainNode = new GainNode(context);
+      const noiseGenerator = new AudioWorkletNode(context, 'noise-generator');
+      noiseGenerator.connect(context.destination);
+
+      const paramAmp = noiseGenerator.parameters.get('amplitude');
+      oscillatorNode.connect(gainNode).connect(paramAmp);
+
+      oscillatorNode.frequency.value = 0.25;
+      gainNode.gain.value = 0.5;
       oscillatorNode.start();
       setOscillator(oscillatorNode);
+      setGain(gainNode);
     }).catch(err => {
       console.error(err);
     });
     setContext(context);
-  };
+  }
 
   const stopProcessing = () => {
     if (oscillator) {
@@ -83,17 +55,17 @@ const TextDefinePattern = () => {
     }
     setProcessing(false);
     setOscillator(null);
-    setContext(null);
-  };
+    setGain(null);
+  }
 
   return (
     <Card className={classes.root} variant="outlined">
       <CardContent>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
-          Basic Pattern 2
+          Noise Generator
         </Typography>
         <p>
-          Define AudioWorkletProcessor as text string.
+          Set user-defined parameters from AudioWorkletNode into AudioWorkletProcessor.
         </p>
       </CardContent>
       <CardActions>
@@ -118,4 +90,4 @@ const TextDefinePattern = () => {
   );
 }
 
-export default TextDefinePattern;
+export default ParamDefinePattern;

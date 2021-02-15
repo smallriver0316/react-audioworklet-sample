@@ -53,11 +53,14 @@ const BasicPattern = () => {
     <Card className={classes.root} variant="outlined">
       <CardContent>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
-          Audio Worklet Basic Implement Pattern
+          Basic Pattern 1
         </Typography>
-        <div>
-          Import AudioWorkletProcessor as text with raw-loader
-        </div>
+        <p>
+          AudioWorklet basic implement pattern.
+        </p>
+        <p>
+          Import AudioWorkletProcessor as text with raw-loader.
+        </p>
       </CardContent>
       <CardActions>
         <Button
