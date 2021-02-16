@@ -4,7 +4,10 @@ import { makeStyles, Card, CardActions, CardContent, Button, Typography } from "
 const useStyles = makeStyles({
   root: {
     width: 256,
-    margin: '16px'
+    margin: '16px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between'
   },
   title: {
     fontSize: 14,

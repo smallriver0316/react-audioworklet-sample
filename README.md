@@ -2,7 +2,7 @@
 
 Sample codes to implement AudioWorklet programs in React.
 
-This tries to implement [web audio samples](https://googlechromelabs.github.io/web-audio-samples/audio-worklet/) by google in React.
+This tries to implement [web audio samples by google](https://googlechromelabs.github.io/web-audio-samples/audio-worklet/) in React.
 
 ## Getting Started with Create React App
 

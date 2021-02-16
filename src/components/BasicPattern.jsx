@@ -5,7 +5,10 @@ import processor from '!!raw-loader!../audioworklet/gain-processor.js';
 const useStyles = makeStyles({
   root: {
     width: 256,
-    margin: '16px'
+    margin: '16px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between'
   },
   title: {
     fontSize: 14,
