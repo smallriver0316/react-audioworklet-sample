@@ -65,7 +65,6 @@ const classes = useStyles();
   const handleChange = (event, value) => {
     if (oscillator) {
       oscillator.frequency.value = value;
-      setOscillator(oscillator);
     }
     setFrequency(value);
   }
