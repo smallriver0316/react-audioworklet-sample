@@ -16,7 +16,7 @@ const useStyles = makeStyles({
   }
 });
 
-const AppContainer = () => {
+const CardContainer = () => {
   const classes = useStyles();
   return (
     <React.Fragment>
@@ -33,4 +33,4 @@ const AppContainer = () => {
   );
 };
 
-export default AppContainer;
+export default CardContainer;

@@ -21,7 +21,8 @@ const classes = useStyles();
   const [processing, setProcessing] = useState(false);
   const [oscillator, setOscillator] = useState(null);
   const [frequency, setFrequency] = useState(0.25);
-  const [, setGain] = useState(null);
+  const [gainNode, setGainNode] = useState(null);
+  const [gain, setGain] = useState(0.5);
 
   const startProcessing = () => {
     setProcessing(true);
@@ -42,7 +43,7 @@ const classes = useStyles();
       gainNode.gain.value = 0.5;
       oscillatorNode.start();
       setOscillator(oscillatorNode);
-      setGain(gainNode);
+      setGainNode(gainNode);
     }).catch(err => {
       console.error(err);
     });
@@ -59,14 +60,21 @@ const classes = useStyles();
     }
     setProcessing(false);
     setOscillator(null);
-    setGain(null);
+    setGainNode(null);
   }
 
-  const handleChange = (event, value) => {
+  const handleFrequencyChange = (event, value) => {
     if (oscillator) {
       oscillator.frequency.value = value;
     }
     setFrequency(value);
+  }
+
+  const handleGainChange = (event, value) => {
+    if (gainNode) {
+      gainNode.gain.value = value;
+    }
+    setGain(value);
   }
 
   return (
@@ -85,8 +93,19 @@ const classes = useStyles();
             max={1}
             step={0.01}
             value={frequency}
-            onChange={handleChange}
+            onChange={handleFrequencyChange}
             aria-labelledby="frequency-slider"
+          />
+        </div>
+        <div>
+          <Typography id="gain-slider" gutterBottom>Gain</Typography>
+          <Slider
+            min={0}
+            max={1}
+            step={0.01}
+            value={gain}
+            onChange={handleGainChange}
+            aria-labelledby="gain-slider"
           />
         </div>
       </CardContent>
