@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { makeStyles, Card, CardActions, CardContent, Button, Typography } from '@material-ui/core';
-// import processor from '!!raw-loader!../audioworklet/messenger-processor.js';
+import processor from '!!raw-loader!../audioworklet/messenger-processor.js';
 
 const useStyles = makeStyles({
   root: {
@@ -14,33 +14,6 @@ const useStyles = makeStyles({
     fontSize: 14,
   }
 });
-
-const processor = `
-class MessengerProcessor extends AudioWorkletProcessor {
-  constructor() {
-    super();
-    this._lastUpdate = currentTime;
-    this.port.onmessage = this.handleMessage_.bind(this);
-  }
-
-  handleMessage_(event) {
-    console.log('[MessengerProcessor:Receieved]' + event.data.message + '(' + event.data.contextTimestamp + ')');
-  }
-
-  process() {
-    if (currentTime - this._lastUpdate > 1.0) {
-      this.port.postMessage({
-        message: '1 second passed',
-        contextTimestamp: currentTime
-      });
-      this._lastUpdate = currentTime;
-    }
-    return true;
-  }
-}
-
-registerProcessor('messenger-processor', MessengerProcessor);
-`;
 
 class MessengerWorkletNode extends AudioWorkletNode {
   constructor(context, logger) {
@@ -104,7 +77,7 @@ const MessagePort = () => {
     <Card className={classes.root} variant="outlined">
       <CardContent>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
-          MessagePort
+          Message Port
         </Typography>
         <div>
           {messages.map((msg, idx) => {

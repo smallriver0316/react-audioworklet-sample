@@ -1,6 +1,7 @@
 class MessengerProcessor extends AudioWorkletProcessor {
   constructor() {
     super();
+    /* eslint-disable no-undef */
     this._lastUpdate = currentTime;
     this.port.onmessage = this.handleMessage_.bind(this);
   }
