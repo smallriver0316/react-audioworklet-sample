@@ -6,6 +6,7 @@ import BasicPattern from './BasicPattern';
 import TextDefinePattern from './TextDefinePattern';
 import ParamDefinePattern from './ParamDefinePattern';
 import ParamControlPattern from './ParamControlPattern';
+import MessagePort from './MessagePort';
 
 const useStyles = makeStyles({
   container: {
@@ -27,6 +28,7 @@ const CardContainer = () => {
           <TextDefinePattern />
           <ParamDefinePattern />
           <ParamControlPattern />
+          <MessagePort />
         </div>
       </Container>
     </React.Fragment>
