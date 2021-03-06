@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import AudioPlayerCard from './AudioPlayerCard';
+import { createAudioWorkletModule } from '../utils/createAudioWorkletModule';
 
 
 const processor = `
@@ -46,8 +47,7 @@ const TextDefinePattern = () => {
 
   const startProcessing = async () => {
     const context = new window.AudioContext();
-    const blob = new Blob([processor], { type: 'application/javascript' });
-    const blobURL = URL.createObjectURL(blob);
+    const blobURL = createAudioWorkletModule(processor);
     await context.audioWorklet.addModule(blobURL).then(() => {
       const oscillatorNode = new OscillatorNode(context);
       const gainWorkletNode = new AudioWorkletNode(context, 'gain-processor');

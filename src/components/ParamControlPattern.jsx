@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { makeStyles, Card, CardActions, CardContent, Button, Typography, Slider } from '@material-ui/core';
 import processor from '!!raw-loader!../audioworklet/noise-generator.js';
+import { createAudioWorkletModule } from '../utils/createAudioWorkletModule';
 
 const useStyles = makeStyles({
   root: {
@@ -28,8 +29,7 @@ const classes = useStyles();
     setProcessing(true);
 
     const context = new window.AudioContext();
-    const blob = new Blob([processor], { type: 'application/javascript' });
-    const blobURL = URL.createObjectURL(blob);
+    const blobURL = createAudioWorkletModule(processor);
     await context.audioWorklet.addModule(blobURL).then(() => {
       const oscillatorNode = new OscillatorNode(context);
       const gainNode = new GainNode(context);

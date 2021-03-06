@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import AudioPlayerCard from './AudioPlayerCard';
 import processor from '!!raw-loader!../audioworklet/bit-crusher.js';
+import { createAudioWorkletModule } from '../utils/createAudioWorkletModule';
 
 const BitCrusher = () => {
   const [context, setContext] = useState(null);
@@ -8,8 +9,7 @@ const BitCrusher = () => {
 
   const startProcessing = async () => {
     const ctx = new window.AudioContext();
-    const blob = new Blob([processor], { type: 'application/javascript' });
-    const blobURL = URL.createObjectURL(blob);
+    const blobURL = createAudioWorkletModule(processor);
     await ctx.audioWorklet.addModule(blobURL).then(() => {
         const oscillatorNode = new OscillatorNode(ctx);
         const bitCrusher = new AudioWorkletNode(ctx, 'bit-crusher');

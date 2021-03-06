@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import AudioPlayerCard from './AudioPlayerCard';
 import processor from '!!raw-loader!../audioworklet/messenger-processor.js';
+import { createAudioWorkletModule } from '../utils/createAudioWorkletModule';
 
 class MessengerWorkletNode extends AudioWorkletNode {
   constructor(context, logger) {
@@ -36,8 +37,7 @@ const MessagePort = () => {
 
   const startProcessing = async () => {
     const context = new window.AudioContext();
-    const blob = new Blob([processor], { type: 'application/javascript' });
-    const blobURL = URL.createObjectURL(blob);
+    const blobURL = createAudioWorkletModule(processor);
     await context.audioWorklet.addModule(blobURL).then(() => {
       const messengerWorkletNode = new MessengerWorkletNode(context, handleMessageBuffer);
       messengerWorkletNode.connect(context.destination);
