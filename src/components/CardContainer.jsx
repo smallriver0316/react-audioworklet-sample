@@ -6,6 +6,7 @@ import TextDefinePattern from './TextDefinePattern';
 import ParamDefinePattern from './ParamDefinePattern';
 import ParamControlPattern from './ParamControlPattern';
 import MessagePort from './MessagePort';
+import BitCrusher from './BitCrusher';
 
 const useStyles = makeStyles({
   container: {
@@ -31,6 +32,7 @@ const CardContainer = () => {
           <ParamDefinePattern />
           <ParamControlPattern />
           <MessagePort />
+          <BitCrusher />
         </div>
       </Container>
     </React.Fragment>

@@ -24,13 +24,13 @@ const classes = useStyles();
   const [gainNode, setGainNode] = useState(null);
   const [gain, setGain] = useState(0.5);
 
-  const startProcessing = () => {
+  const startProcessing = async () => {
     setProcessing(true);
 
     const context = new window.AudioContext();
     const blob = new Blob([processor], { type: 'application/javascript' });
     const blobURL = URL.createObjectURL(blob);
-    context.audioWorklet.addModule(blobURL).then(() => {
+    await context.audioWorklet.addModule(blobURL).then(() => {
       const oscillatorNode = new OscillatorNode(context);
       const gainNode = new GainNode(context);
       const noiseGenerator = new AudioWorkletNode(context, 'noise-generator');
@@ -61,6 +61,7 @@ const classes = useStyles();
     setProcessing(false);
     setOscillator(null);
     setGainNode(null);
+    setContext(null);
   }
 
   const handleFrequencyChange = (event, value) => {

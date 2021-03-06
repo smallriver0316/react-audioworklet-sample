@@ -44,11 +44,11 @@ const TextDefinePattern = () => {
   const [context, setContext] = useState(null);
   const [oscillator, setOscillator] = useState(null);
 
-  const startProcessing = () => {
+  const startProcessing = async () => {
     const context = new window.AudioContext();
     const blob = new Blob([processor], { type: 'application/javascript' });
     const blobURL = URL.createObjectURL(blob);
-    context.audioWorklet.addModule(blobURL).then(() => {
+    await context.audioWorklet.addModule(blobURL).then(() => {
       const oscillatorNode = new OscillatorNode(context);
       const gainWorkletNode = new AudioWorkletNode(context, 'gain-processor');
       oscillatorNode.connect(gainWorkletNode).connect(context.destination);

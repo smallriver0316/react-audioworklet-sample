@@ -7,11 +7,11 @@ const ParamDefinePattern = () => {
   const [oscillator, setOscillator] = useState(null);
   const [, setGain] = useState(null);
 
-  const startProcessing = () => {
+  const startProcessing = async () => {
     const context = new window.AudioContext();
     const blob = new Blob([processor], { type: 'application/javascript' });
     const blobURL = URL.createObjectURL(blob);
-    context.audioWorklet.addModule(blobURL).then(() => {
+    await context.audioWorklet.addModule(blobURL).then(() => {
       const oscillatorNode = new OscillatorNode(context);
       const gainNode = new GainNode(context);
       const noiseGenerator = new AudioWorkletNode(context, 'noise-generator');
@@ -41,6 +41,7 @@ const ParamDefinePattern = () => {
     }
     setOscillator(null);
     setGain(null);
+    setContext(null);
   }
 
   return (
