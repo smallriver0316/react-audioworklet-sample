@@ -1,7 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Container from '@material-ui/core/Container';
+import { CssBaseline, Container, Typography } from '@material-ui/core';
 import BasicPattern from './BasicPattern';
 import TextDefinePattern from './TextDefinePattern';
 import ParamDefinePattern from './ParamDefinePattern';
@@ -23,6 +22,9 @@ const CardContainer = () => {
     <React.Fragment>
       <CssBaseline />
       <Container fixed>
+        <Typography variant="h3">
+          React AudioWorklet Design Pattern
+        </Typography>
         <div className={classes.container}>
           <BasicPattern />
           <TextDefinePattern />

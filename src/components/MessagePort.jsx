@@ -1,19 +1,6 @@
 import React, { useState } from 'react';
-import { makeStyles, Card, CardActions, CardContent, Button, Typography } from '@material-ui/core';
+import AudioPlayerCard from './AudioPlayerCard';
 import processor from '!!raw-loader!../audioworklet/messenger-processor.js';
-
-const useStyles = makeStyles({
-  root: {
-    width: 256,
-    margin: '16px',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between'
-  },
-  title: {
-    fontSize: 14,
-  }
-});
 
 class MessengerWorkletNode extends AudioWorkletNode {
   constructor(context, logger) {
@@ -37,8 +24,6 @@ class MessengerWorkletNode extends AudioWorkletNode {
 }
 
 const MessagePort = () => {
-  const classes = useStyles();
-  const [processing, setProcessing] = useState(false);
   const [context, setContext] = useState(null);
   const [messages, setMessages] = useState([]);
 
@@ -50,8 +35,6 @@ const MessagePort = () => {
   };
 
   const startProcessing = async () => {
-    setProcessing(true);
-
     const context = new window.AudioContext();
     const blob = new Blob([processor], { type: 'application/javascript' });
     const blobURL = URL.createObjectURL(blob);
@@ -68,42 +51,23 @@ const MessagePort = () => {
     if (context) {
       context.close();
     }
-    setProcessing(false);
     setContext(null);
     setMessages([]);
   }
 
   return (
-    <Card className={classes.root} variant="outlined">
-      <CardContent>
-        <Typography className={classes.title} color="textSecondary" gutterBottom>
-          Message Port
-        </Typography>
+    <AudioPlayerCard
+      title="Message Port"
+      subTitle={
         <div>
           {messages.map((msg, idx) => {
             return (<p key={idx}>{msg}</p>);
           })}
         </div>
-      </CardContent>
-      <CardActions>
-        <Button
-          key="play"
-          color="primary"
-          disabled={processing}
-          onClick={() => startProcessing()}
-        >
-          Play
-        </Button>
-        <Button
-          key="stop"
-          color="secondary"
-          disabled={!processing}
-          onClick={() => stopProcessing()}
-        >
-          Stop
-        </Button>
-      </CardActions>
-    </Card>
+      }
+      onStart={startProcessing}
+      onStop={stopProcessing}
+    />
   );
 }
 

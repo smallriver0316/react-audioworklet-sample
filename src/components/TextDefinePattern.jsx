@@ -1,18 +1,6 @@
 import React, { useState } from 'react';
-import { makeStyles, Card, CardActions, CardContent, Button, Typography } from "@material-ui/core";
+import AudioPlayerCard from './AudioPlayerCard';
 
-const useStyles = makeStyles({
-  root: {
-    width: 256,
-    margin: '16px',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between'
-  },
-  title: {
-    fontSize: 14,
-  }
-});
 
 const processor = `
 class GainProcessor extends AudioWorkletProcessor {
@@ -53,14 +41,10 @@ registerProcessor('gain-processor', GainProcessor);
 `;
 
 const TextDefinePattern = () => {
-  const classes = useStyles();
   const [context, setContext] = useState(null);
-  const [processing, setProcessing] = useState(false);
   const [oscillator, setOscillator] = useState(null);
 
   const startProcessing = () => {
-    setProcessing(true);
-
     const context = new window.AudioContext();
     const blob = new Blob([processor], { type: 'application/javascript' });
     const blobURL = URL.createObjectURL(blob);
@@ -84,40 +68,21 @@ const TextDefinePattern = () => {
     if (context) {
       context.close();
     }
-    setProcessing(false);
     setOscillator(null);
     setContext(null);
   };
 
   return (
-    <Card className={classes.root} variant="outlined">
-      <CardContent>
-        <Typography className={classes.title} color="textSecondary" gutterBottom>
-          Basic Pattern 2
-        </Typography>
+    <AudioPlayerCard
+      title="Basic Pattern 2"
+      subTitle={
         <p>
           Define AudioWorkletProcessor as text string.
         </p>
-      </CardContent>
-      <CardActions>
-        <Button
-          key="play"
-          color="primary"
-          disabled={processing}
-          onClick={() => startProcessing()}
-        >
-          Play
-        </Button>
-        <Button
-          key="stop"
-          color="secondary"
-          disabled={!processing}
-          onClick={() => stopProcessing()}
-        >
-          Stop
-        </Button>
-      </CardActions>
-    </Card>
+      }
+      onStart={startProcessing}
+      onStop={stopProcessing}
+    />
   );
 }
 
