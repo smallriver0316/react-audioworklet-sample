@@ -75,14 +75,13 @@ const TextDefinePattern = () => {
   return (
     <AudioPlayerCard
       title="Basic Pattern 2"
-      subTitle={
-        <p>
-          Define AudioWorkletProcessor as text string.
-        </p>
-      }
       onStart={startProcessing}
       onStop={stopProcessing}
-    />
+    >
+      <p>
+        Define AudioWorkletProcessor as text string.
+      </p>
+    </AudioPlayerCard>
   );
 }
 

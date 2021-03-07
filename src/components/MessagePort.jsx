@@ -58,16 +58,13 @@ const MessagePort = () => {
   return (
     <AudioPlayerCard
       title="Message Port"
-      subTitle={
-        <div>
-          {messages.map((msg, idx) => {
-            return (<p key={idx}>{msg}</p>);
-          })}
-        </div>
-      }
       onStart={startProcessing}
       onStop={stopProcessing}
-    />
+    >
+      {messages.map((msg, idx) => {
+        return (<p key={idx}>{msg}</p>);
+      })}
+    </AudioPlayerCard>
   );
 }
 

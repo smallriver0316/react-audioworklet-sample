@@ -1,8 +1,12 @@
-# react-audioworklet-study
+# React AudioWorklet Prototyping
 
-Sample codes to implement AudioWorklet programs in React.
+This is sample code to implement AudioWorklet programs in React.
 
-This tries to implement [web audio samples by google](https://googlechromelabs.github.io/web-audio-samples/audio-worklet/) in React.
+The purpose is prototyping and to describe design patterns of AudioWorklet in React.
+
+It's inspired by [web audio samples by google](https://googlechromelabs.github.io/web-audio-samples/audio-worklet/).
+
+This project was created by create-react-app.
 
 ## Getting Started with Create React App
 

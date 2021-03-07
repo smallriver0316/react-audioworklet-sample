@@ -47,14 +47,13 @@ const ParamDefinePattern = () => {
   return (
     <AudioPlayerCard
       title="Noise Generator"
-      subTitle={
-        <p>
-          Set user-defined parameters from AudioWorkletNode into AudioWorkletProcessor.
-        </p>
-      }
       onStart={startProcessing}
       onStop={stopProcessing}
-    />
+    >
+      <p>
+        Set user-defined parameters from AudioWorkletNode into AudioWorkletProcessor.
+      </p>
+    </AudioPlayerCard>
   );
 }
 

@@ -37,19 +37,16 @@ const BasicPattern = () => {
   return (
     <AudioPlayerCard
       title="Basic Pattern 1"
-      subTitle={
-        <div>
-          <p>
-            AudioWorklet basic implement pattern.
-          </p>
-          <p>
-            Import AudioWorkletProcessor as text with raw-loader.
-          </p>
-        </div>
-      }
       onStart={startProcessing}
       onStop={stopProcessing}
-    />
+    >
+      <p>
+        AudioWorklet basic implement pattern.
+      </p>
+      <p>
+        Import AudioWorkletProcessor as text with raw-loader.
+      </p>
+    </AudioPlayerCard>
   );
 }
 

@@ -8,6 +8,7 @@ import {
   Button,
   Typography
 } from "@material-ui/core";
+import { PlayArrow, Stop } from '@material-ui/icons';
 
 const useStyles = makeStyles({
   root: {
@@ -42,13 +43,14 @@ const AudioPlayerCard = (props) => {
         <Typography className={classes.title} color="textSecondary" gutterBottom>
           {props.title}
         </Typography>
-        {props.subTitle}
+        <div>{props.children}</div>
       </CardContent>
       <CardActions>
         <Button
           key="play"
           color="primary"
           disabled={processing}
+          startIcon={<PlayArrow />}
           onClick={() => startProcessing()}
         >
           Play
@@ -57,6 +59,7 @@ const AudioPlayerCard = (props) => {
           key="stop"
           color="secondary"
           disabled={!processing}
+          startIcon={<Stop />}
           onClick={() => stopProcessing()}
         >
           Stop
@@ -68,9 +71,9 @@ const AudioPlayerCard = (props) => {
 
 AudioPlayerCard.propTypes = {
   title: PropTypes.string.isRequired,
-  subTitle: PropTypes.element,
   onStart: PropTypes.func.isRequired,
-  onStop: PropTypes.func.isRequired
+  onStop: PropTypes.func.isRequired,
+  children: PropTypes.node
 };
 
 export default AudioPlayerCard;
