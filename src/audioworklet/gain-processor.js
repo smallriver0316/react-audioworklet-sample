@@ -4,10 +4,14 @@ class GainProcessor extends AudioWorkletProcessor {
   }
 
   static get parameterDescriptors() {
-    return [{
-      name: 'gain',
-      defaultValue: '1'
-    }];
+    return [
+      {
+        name: 'gain',
+        defaultValue: '1',
+        minValue: 0.0,
+        maxValue: 1.0
+      }
+    ];
   }
 
   process(inputs, outputs, parameters) {

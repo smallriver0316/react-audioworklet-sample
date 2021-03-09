@@ -70,10 +70,10 @@ const AudioPlayerCard = (props) => {
 };
 
 AudioPlayerCard.propTypes = {
+  children: PropTypes.node,
   title: PropTypes.string.isRequired,
   onStart: PropTypes.func.isRequired,
-  onStop: PropTypes.func.isRequired,
-  children: PropTypes.node
+  onStop: PropTypes.func.isRequired
 };
 
 export default AudioPlayerCard;

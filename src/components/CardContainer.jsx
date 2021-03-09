@@ -7,6 +7,7 @@ import ParamDefinePattern from './ParamDefinePattern';
 import ParamControlPattern from './ParamControlPattern';
 import MessagePort from './MessagePort';
 import BitCrusher from './BitCrusher';
+import ContentPlayer from './ContentPlayer';
 
 const useStyles = makeStyles({
   container: {
@@ -31,6 +32,7 @@ const CardContainer = () => {
           <TextDefinePattern />
           <ParamDefinePattern />
           <ParamControlPattern />
+          <ContentPlayer />
           <MessagePort />
           <BitCrusher />
         </div>
