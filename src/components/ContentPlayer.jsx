@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-// import { Typography, Slider } from '@material-ui/core';
+import { Typography, Slider } from '@material-ui/core';
 import AudioPlayerCard from './AudioPlayerCard';
-import processor from '!!raw-loader!../audioworklet/gain-processor.js';
-import { createAudioWorkletModule } from '../utils/createAudioWorkletModule';
+// import processor from '!!raw-loader!../audioworklet/gain-processor.js';
+// import { createAudioWorkletModule } from '../utils/createAudioWorkletModule';
 
 const ContentPlayer = () => {
   const [context, setContext] = useState(null);
   const [source, setSource] = useState(null);
-  // const [gainNode, setGainNode] = useState(null);
-  // const [gainValue, setGainValue] = useState(1.0);
+  const [gainNode, setGainNode] = useState(null);
+  const [gainValue, setGainValue] = useState(0.5);
 
   const startProcessing = async () => {
     const ctx = new window.AudioContext();
@@ -27,25 +27,28 @@ const ContentPlayer = () => {
     source.buffer = buffer;
     source.loop = true;
 
-    const blobURL = createAudioWorkletModule(processor);
-    await ctx.audioWorklet.addModule(blobURL).then(() => {
-      const audioWorklet = new AudioWorkletNode(ctx, 'gain-processor');
+    const gainNode = new GainNode(ctx);
+    source.connect(gainNode).connect(ctx.destination);
+    source.start();
 
-      source.connect(audioWorklet).connect(ctx.destination);
+    // const blobURL = createAudioWorkletModule(processor);
+    // await ctx.audioWorklet.addModule(blobURL).then(() => {
+    //   const gainProcessor = new AudioWorkletNode(ctx, 'gain-processor');
+    //   const gainNode = new GainNode(ctx);
 
-      // const gainParam = audioWorklet.parameters.get('gain');
-      // const gainNode = new GainNode(ctx);
-      // source.connect(gainNode).connect(gainParam);
-      // gainNode.gain.value = 1.0;
+    //   source.connect(gainNode).connect(ctx.destination);
+    //   source.start();
 
-      source.start();
-      // setGainNode(gainNode);
-    }).catch(err => {
-      console.error(err);
-    });
-
+    //   const gainParam = gainProcessor.parameters.get('gain');
+    //   gainNode.connect(gainParam);
+    //   setGainNode(gainNode);
+    // }).catch(err => {
+    //   console.error(err);
+    // });
+    gainNode.gain.value = 0.5;
     setContext(ctx);
     setSource(source);
+    setGainNode(gainNode);
   };
 
   const stopProcessing = () => {
@@ -53,23 +56,23 @@ const ContentPlayer = () => {
       source.stop();
       source.disconnect();
     }
-    // if (gainNode) {
-    //   gainNode.disconnect();
-    // }
+    if (gainNode) {
+      gainNode.disconnect();
+    }
     if (context) {
       context.close();
     }
     setSource(null);
-    // setGainNode(null);
+    setGainNode(null);
     setContext(null);
   };
 
-  // const handleGainChange = (event, value) => {
-  //   if (gainNode) {
-  //     gainNode.gain.value = value;
-  //   }
-  //   setGainValue(value);
-  // }
+  const handleGainChange = (event, value) => {
+    if (gainNode) {
+      gainNode.gain.value = value;
+    }
+    setGainValue(value);
+  }
 
   return (
     <AudioPlayerCard
@@ -77,8 +80,9 @@ const ContentPlayer = () => {
       onStart={startProcessing}
       onStop={stopProcessing}
     >
-      <p>Play local audio file</p>
-      {/* <div>
+      <p>Play local MP3 data in public/.</p>
+      <p>Loop playback is ON.</p>
+      <div>
         <Typography id="gain-slider" gutterBottom>Gain</Typography>
         <Slider
           min={0}
@@ -88,7 +92,7 @@ const ContentPlayer = () => {
           onChange={handleGainChange}
           aria-labelledby="gain-slider"
         />
-      </div> */}
+      </div>
     </AudioPlayerCard>
   );
 };
