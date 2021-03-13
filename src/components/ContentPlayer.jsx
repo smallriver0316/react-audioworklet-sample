@@ -80,8 +80,9 @@ const ContentPlayer = () => {
       onStart={startProcessing}
       onStop={stopProcessing}
     >
-      <p>Play local MP3 data in public/.</p>
-      <p>Loop playback is ON.</p>
+      <p>Play local MP3 data as public/sample.mp3.</p>
+      <p>Gain control is achieved with GainNode.</p>
+      <p>Loop playback is enabled.</p>
       <div>
         <Typography id="gain-slider" gutterBottom>Gain</Typography>
         <Slider
