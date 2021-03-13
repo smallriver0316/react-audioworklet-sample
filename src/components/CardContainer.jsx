@@ -8,6 +8,7 @@ import ParamControlPattern from './ParamControlPattern';
 import MessagePort from './MessagePort';
 import BitCrusher from './BitCrusher';
 import ContentPlayer from './ContentPlayer';
+import OnePoleFilter from './OnePoleFilter';
 
 const useStyles = makeStyles({
   container: {
@@ -35,6 +36,7 @@ const CardContainer = () => {
           <ContentPlayer />
           <MessagePort />
           <BitCrusher />
+          <OnePoleFilter />
         </div>
       </Container>
     </React.Fragment>
